@@ -12,69 +12,182 @@
         <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         <script src="js/hello-world.js" type="text/javascript"></script>
     </head> 
+    <!-- Simple Logo Game Layout -->
+    <style> 
+            .ui-grid-c div img{
+                width:75px;
+                height:75px;
+            }
+            .ui-grid-c div input{
+                width:80px;
+            }
+            .main-menu-text{
+                font-size:80%;
+            }
+        
+            /*order of importance based on order read by DOM*/
+            .unsolved{
+                border-style:solid;
+                border-color:black;
+            }
+            .selected{
+                border-style:solid;
+                border-color:yellow;
+            }
+            .wrong{
+                border-style:solid;
+                border-color:red;
+            }
+            .correct{
+                border-style:solid;
+                border-color:green;
+            }
+    </style>
+    
+    <script type="text/javascript">
+        
+		$('div:jqmData(role="page")').live('pagebeforeshow', function() {
+            $('.ui-grid-c div img').addClass("unsolved");
+			$('.ui-grid-c div img').bind('click', function() {
+				console.log("clicked image");
+                //selects parent DIV element
+                $('.guessBox').parent().find('img').removeClass("selected");
+                $('.guessBox').remove();
+                $($(this).parent()).append('<input type="text" class="guessBox" id="enterField" onchange="textEntered();"/>');
+                $(this).addClass("selected");
+                $(this).parent().find('#enterField').addClass("selected");
+			});
+		});
+        
+        function textEntered(){
+            //check the text to see if it is correct
+            if($('.guessBox').val() == $('div .selected').attr("value")){
+                //mark green
+                $('.ui-grid-c div .guessBox').parent().find('.selected').addClass("correct");
+            }else{ 
+                //mark red
+                $('.ui-grid-c div .guessBox').parent().find('.selected').addClass("wrong");
+            }
+            //remove 'selected' (yellow) class, remove text box
+            $('.ui-grid-c div .guessBox').parent().find('.selected').removeClass("selected");
+            $('.ui-grid-c div .guessBox').remove();
+        }
+    </script>
     <body> 
         
-        <div data-role="page" id="home">
+        <!-- MAIN VIEW -->
+        <div data-role="page" id="mainView">
             <div data-role="header">
-                <h1>Hello, World!</h1>
+                <h1>Logo Game</h1><a href="#mainView" data-icon="home" data-iconpos="notext" 
+                                      data-transition="slide">Home</a>
             </div>
             <div data-role="content">
-                <h1>Welcome to Icenium!</h1>
-                <p>
-                    Icenium&trade; enables you to build cross-platform device applications regardless of your 
-                    development platform by combining the convenience of a local development toolset with the 
-                    power and flexibility of the cloud.
-                </p>
+                <img src="/knowYourLogo.png" width="300" height="auto"/>
             </div>
-            <div class="nav">
-                <ul data-role="listview">
-                    <li><a href="#page1" data-transition="slide">UI Interaction Example</a></li>
-                    <li><a href="#page2" data-transition="slide">Geolocation Example</a></li>
+            <div> 
+                <ul data-role="listview" data-inset="true" id="mainList">
+                    <li><a href="#nflLogoView" class="main-menu-text">Play</a></li>
+                    <li><a href="#settingsView" class="main-menu-text">Settings</a></li>
+                    <li><a href="#aboutView" class="main-menu-text">About</a></li>
                 </ul>
             </div>
-            <div data-role="footer" data-position="fixed" data-id="oneFooter">
-                <span class="footerText">Built with Icenium&trade;</span>
-            </div>
         </div>
-        
-        <!-- The following page demonstrates basic user interaction. -->
-        <div data-role="page" id="page1" data-add-back-btn="true">
+                    
+        <!-- NFL LOGOS -->
+          <div data-role="view" id="nflLogoView">
             <div data-role="header">
-                <h1>Hello</h1>
+                <a href="#mainView" data-icon="home" data-iconpos="notext" data-transition="slide">Home</a>
             </div>
-            <div data-role="content">
-                <h1>Say Hello!</h1>
-                <div id='helloWorldInput'>
-                    <label for="txtName">Enter your name:</label>
-                    <input type="text" id="txtName" value="" />
-                </div>
-                <div id='helloWorldText' style="display:block;"></div>
-                <div align="center">
-                    <div data-role="controlgroup" style="display:inline-block;" data-type="horizontal">
-                        <button data-icon="delete" onClick="sayHelloReset();">Reset</button>
-                        <button data-theme="a" onClick="sayHello();">Submit</button>
-                    </div>
-                </div>
-            </div>
-            <div data-role="footer" data-position="fixed"  data-id="oneFooter">
-                <span class="footerText">Built with Icenium&trade;</span>
-            </div>
+              
+             <h1>NFL Teams</h1> 
+             <div class="ui-grid-c">
+                 <div class="ui-block-a"><img src="nflLogos/colts.png" value="colts"/></div>
+                 <div class="ui-block-b"><img src="nflLogos/steelers.png" value="steelers"/></div>
+                 <div class="ui-block-c"><img src="nflLogos/buccaneers.png" value="buccaneers"/></div>
+                 <div class="ui-block-d"><img src="nflLogos/dolphins.png" value="dolphins"/></div>
+             </div>
+             <div class="ui-grid-c">
+                 <div class="ui-block-a"><img src="nflLogos/broncos.png" value="broncos"/></div>
+                 <div class="ui-block-b"><img src="nflLogos/saints.png" value="saints"/></div>
+                 <div class="ui-block-c"><img src="nflLogos/texans.png" value="texans"/></div>
+                 <div class="ui-block-d"><img src="nflLogos/patriots.png" value="patriots"/></div>
+             </div>
+             <div class="ui-grid-c">
+                 <div class="ui-block-a"><img src="nflLogos/49ers.png" value="49ers"/></div>
+                 <div class="ui-block-b"><img src="nflLogos/vikings.png" value="vikings"/></div>
+                 <div class="ui-block-c"><img src="nflLogos/bears.png" value="bears"/></div>
+                 <div class="ui-block-d"><img src="nflLogos/titans.png" value="titans"/></div>
+             </div>
+             <div class="ui-grid-c">
+                 <div class="ui-block-a"><img src="nflLogos/bengals.png" value="bengals"/></div>
+                 <div class="ui-block-b"><img src="nflLogos/seahawks.png" value="seahawks"/></div>
+                 <div class="ui-block-c"><img src="nflLogos/redskins.png" value="redskins"/></div>
+                 <div class="ui-block-d"><img src="nflLogos/ravens.png" value="ravens"/></div>
+             </div>
+             <div class="ui-grid-c">
+                 <div class="ui-block-a"><img src="nflLogos/bills.png" value="bills"/></div>
+                 <div class="ui-block-b"><img src="nflLogos/rams.png" value="rams"/></div>
+                 <div class="ui-block-c"><img src="nflLogos/browns.png" value="browns"/></div>
+                 <div class="ui-block-d"><img src="nflLogos/cardinals.png" value="cardinals"/></div>
+             </div>
+             <div class="ui-grid-c">
+                 <div class="ui-block-a"><img src="nflLogos/raiders.png" value="raiders"/></div>
+                 <div class="ui-block-b"><img src="nflLogos/panthers.png" value="panthers"/></div>
+                 <div class="ui-block-c"><img src="nflLogos/eagles.png" value="eagles"/></div>
+                 <div class="ui-block-d"><img src="nflLogos/chargers.png" value="chargers"/></div>
+             </div>
+             <div class="ui-grid-c">
+                 <div class="ui-block-a"><img src="nflLogos/jaguars.png" value="jaguars"/></div>
+                 <div class="ui-block-b"><img src="nflLogos/packers.png" value="packers"/></div>
+                 <div class="ui-block-c"><img src="nflLogos/lions.png" value="lions"/></div>
+                 <div class="ui-block-d"><img src="nflLogos/chiefs.png" value="chiefs"/></div>
+             </div>
+             <div class="ui-grid-c">
+                 <div class="ui-block-a"><img src="nflLogos/cowboys.png" value="cowboys"/></div>
+                 <div class="ui-block-b"><img src="nflLogos/falcons.png" value="falcons"/></div>
+                 <div class="ui-block-c"><img src="nflLogos/giants.png" value="giants"/></div>
+                 <div class="ui-block-d"><img src="nflLogos/jets.png" value="jets"/></div>
+             </div>
+             
+          </div>
+                    
+        <!-- SETTINGS -->
+        <div data-role="view" id="settingsView">
+        <div data-role="header">
+           <h1>Settings</h1>
+           <a href="#mainView" data-icon="home" data-iconpos="notext" data-transition="slide">Home</a>
+           <div data-role="navbar">
+           </div>
         </div>
-        
-        <!-- The following page demonstrates how to access device sensors using Apache Callback (aka PhoneGap) -->
-        <div data-role="page" id="page2" data-add-back-btn="true">
+        <ul style="list-style-type: none;">
+         <li class="ui-grid-a">
+          <div class="ui-block-a">Sound</div>
+          <div class="ui-block-b"><select data-role="slider"><option value="off">Off</option>
+                                                      <option value="on">On</option></select>
+          </div>  
+         </li>
+         <li class="ui-grid-a">
+          <div class="ui-block-a">Music</div>
+          <div class="ui-block-b"><select data-role="slider"><option value="off">Off</option>
+                                                      <option value="on">On</option></select>
+          </div>
+                    
+         </li>
+         <li class="ui-grid-a">
+          <div class="ui-block-a">Do you like this app?</div>
+          <div class="ui-block-b"><select data-role="slider"><option value="on">Yes</option>
+                                                    <option value="off">No</option></select>
+          </div>     
+         </li>
+        </ul>
+             
+        </div>
+         <!-- ABOUT / MISC -->
+          <div data-role="view" id="aboutView">
             <div data-role="header">
-                <h1>Geolocation Example</h1>
+                <h1>About</h1>
+                <a href="#mainView" data-icon="home" data-iconpos="notext" data-transition="slide">Home</a>
             </div>
-            <div data-role="content">
-                <h1>My Location</h1>
-                <div id="myLocation">Unable to get location information. Please check your network connection and try again.</div>
-                <button data-icon="refresh" onClick="getLocation();">Refresh Location</button>
-                <div id="map_canvas"></div>
-            </div>
-            <div data-role="footer" data-position="fixed" data-id="oneFooter">
-                <span class="footerText">Built with Icenium&trade;</span>
-            </div>
-        </div>
+        </div>        
     </body>
-    </html>
+</html>
